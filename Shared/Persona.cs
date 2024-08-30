@@ -4,7 +4,8 @@
     {
         public long Id { get; set; }
         public string Nombre { get; set; } = "-- Sin Nombre --";
-
+        public string Apellido { get; set; } = "-- Sin Apellido --";
+        public int Edad { get; set; } = 0;
         private string documento = "";
         public string Documento
         {
@@ -23,7 +24,7 @@
 
         public string GetString()
         {
-            return $"Id: {Id}, Documento: {documento}, Nombre: {Nombre}";
+            return $"ID: {Id}, Nombre: {Nombre}, Apellido: {Apellido}, Documento: {Documento}, Edad: {Edad}";
         }
     }
 }
