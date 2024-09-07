@@ -1,5 +1,5 @@
 ﻿using DAL.IDALs;
-using DAL.Models;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace DAL.DALs
     {
         private string connectionString = "Server=DESKTOP-9MUIN73\\SQLEXPRESS;Database=Practico1;User Id=sa;Password=231002lib;";
 
-        public void AddPersona(Personas persona)
+        public void AddPersona(Persona persona)
         {
             //agregra una nueva persona a la base de datos
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -38,7 +38,7 @@ namespace DAL.DALs
             }
         }
 
-        public Personas GetPersona(string id)
+        public Persona GetPersona(string id)
         {
             //obtiene una persona de la base de datos
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -49,8 +49,8 @@ namespace DAL.DALs
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    Personas persona = new Personas();
-                   //persona.Id = reader.GetInt64(0);
+                    Persona persona = new Persona();
+                    //persona.Id = reader.GetInt64(0);
                     persona.Nombre = reader.GetString(1);
                     persona.Apellido = reader.GetString(2);
                     persona.Documento = reader.GetString(3);
@@ -64,7 +64,7 @@ namespace DAL.DALs
             }
         }
 
-        public List<Personas> GetPersonas()
+        public List<Persona> GetPersonas()
         {
             //obtiene todas las personas de la base de datos
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -73,10 +73,10 @@ namespace DAL.DALs
                 SqlCommand command = new SqlCommand(sql, connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                List<Personas> personas = new List<Personas>();
+                List<Persona> personas = new List<Persona>();
                 while (reader.Read())
                 {
-                    Personas persona = new Personas();
+                    Persona persona = new Persona();
                     //persona.Id = reader.GetInt64(0);
                     persona.Nombre = reader.GetString(3);
                     persona.Apellido = reader.GetString(2);
@@ -88,7 +88,7 @@ namespace DAL.DALs
             }
         }
 
-        public void UpdatePersona(Personas persona)
+        public void UpdatePersona(Persona persona)
         {
             throw new NotImplementedException();
         }

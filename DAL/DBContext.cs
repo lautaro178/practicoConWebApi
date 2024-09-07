@@ -8,9 +8,10 @@ using DAL.Models;
 
 namespace DAL
 {
+
     public class DBContext : DbContext
     {
-        private string _connectionString = "Server=DESKTOP-9MUIN73\\SQLEXPRESS;Database=Practico1EF4;User Id=sa;Password=231002lib;Encrypt=False;";
+        private string _connectionString = "Server=sqlserver,1433;Database=Practico4;User Id=sa;Password=231002lib;Encrypt=False;";
 
         public DBContext()
         {
@@ -33,6 +34,6 @@ namespace DAL
         public DbSet<Personas> Personas { get; set; }
 
         public DbSet<Vehiculos> Vehiculos { get; set; }
-        
+
     }
 }

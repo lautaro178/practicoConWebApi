@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.Models;
-using Shared;
 
-namespace DAL.IDALs
+namespace BL.IBLs
 {
-    public interface IDAL_Vehiculo
+    public interface IBL_Vehiculos
     {
         List<Vehiculo> GetVehiculos();
         Vehiculo GetVehiculo(string matricula);

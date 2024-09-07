@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.Models;
+using Shared;
 using DAL.IDALs;
+using DAL.Models;
 
 namespace DAL.DALs
 {
@@ -17,40 +18,47 @@ namespace DAL.DALs
             _context = dBContext;
         }
 
-        public void AddVehiculo(Vehiculos vehiculo)
+        public void AddVehiculo(Vehiculo vehiculo)
         {
-            _context.Vehiculos.Add(vehiculo);
+            var vehiculoEntity = Vehiculos.FromEntity(vehiculo);
+            _context.Vehiculos.Add(vehiculoEntity);
             _context.SaveChanges();
         }
 
-        public Vehiculos GetVehiculo(string matricula)
+        public Vehiculo GetVehiculo(string matricula)
         {
-            return _context.Vehiculos.FirstOrDefault(v => v.Matricula == matricula);
+            var vehiculoEntity = _context.Vehiculos.FirstOrDefault(v => v.Matricula == matricula);
+            if (vehiculoEntity != null)
+            {
+                return vehiculoEntity.getEntity();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void DeleteVehiculo(string matricula)
         {
-            Vehiculos vehiculo = GetVehiculo(matricula);
-            if (vehiculo != null)
+            var vehiculoEntity = _context.Vehiculos.FirstOrDefault(v => v.Matricula == matricula);
+            if (vehiculoEntity != null)
             {
-                _context.Vehiculos.Remove(vehiculo);
+                _context.Vehiculos.Remove(vehiculoEntity);
                 _context.SaveChanges();
             }
         }
 
-        public List<Vehiculos> GetVehiculos()
+        public List<Vehiculo> GetVehiculos()
         {
-            return _context.Vehiculos.ToList();
+            return _context.Vehiculos.Select(v => new Vehiculo { Id = v.Id, Marca = v.Marca, Modelo = v.Modelo, Matricula = v.Matricula }).ToList();
         }
 
-        public void UpdateVehiculo(Vehiculos vehiculo)
+        public void UpdateVehiculo(Vehiculo vehiculo)
         {
-            Vehiculos vehiculoToUpdate = GetVehiculo(vehiculo.Matricula);
-            if (vehiculoToUpdate != null)
+            var vehiculoEntity = _context.Vehiculos.FirstOrDefault(v => v.Matricula == vehiculo.Matricula);
+            if (vehiculoEntity != null)
             {
-                vehiculoToUpdate.Marca = vehiculo.Marca;
-                vehiculoToUpdate.Modelo = vehiculo.Modelo;
-                vehiculoToUpdate.Matricula = vehiculo.Matricula;
+                vehiculoEntity = Vehiculos.FromEntity(vehiculo);
                 _context.SaveChanges();
             }
         }

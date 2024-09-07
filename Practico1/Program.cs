@@ -1,8 +1,8 @@
 ﻿using DAL.DALs;
 using DAL.IDALs;
 using Shared;
-using DAL.Models;
 using DAL;
+using DAL.Models;
 
 // dal = new DAL_Personas_Mock();
 DBContext dBContext = new DBContext();
@@ -25,7 +25,7 @@ do
         {
             case "NUEVA":
 
-                Personas persona = new Personas();
+                Persona persona = new Persona();
                 Console.WriteLine("Ingrese el documento de la persona: ");
                 persona.Documento = Console.ReadLine();
                 Console.WriteLine("Ingrese el nombre de la persona: ");
@@ -46,10 +46,10 @@ do
                     case "1":
                         Console.WriteLine("Ingrese la cedula: ");
                         string cedula2 = Console.ReadLine();
-                        Personas persona2= dal.GetPersona(cedula2);
-                        if (persona2!= null)
+                        Persona persona2 = dal.GetPersona(cedula2);
+                        if (persona2 != null)
                         {
-                            Console.WriteLine(persona2.GetStringConVehiculo(dBContext));
+                            //Console.WriteLine(persona2.GetStringConVehiculo());
                         }
                         else
                         {
@@ -58,9 +58,9 @@ do
                         break;
 
                     case "*":
-                        foreach (Personas p in dal.GetPersonas())
+                        foreach (Persona p in dal.GetPersonas())
                         {
-                            Console.WriteLine(p.GetStringConVehiculo(dBContext));
+                            //Console.WriteLine(p.GetStringConVehiculo());
                         }
                         break;
 
@@ -74,14 +74,14 @@ do
 
                 Console.WriteLine("Ingrese la cedula: ");
                 string cedula = Console.ReadLine();
-                Personas persona3 = dal.GetPersona(cedula);
+                Persona persona3 = dal.GetPersona(cedula);
                 Console.WriteLine(persona3.GetString());
                 Console.WriteLine("Que quieres actualizar?");
                 Console.WriteLine("DOCUMENTO/NOMBRE/APELLIDO/EDAD");
                 string opcionActualizar = "";
                 opcionActualizar = Console.ReadLine().ToUpper();
                 switch (opcionActualizar)
-                
+
                 {
                     case "DOCUMENTO":
                         Console.WriteLine("Ingrese el documento de la persona: ");
@@ -121,26 +121,12 @@ do
 
                 Console.WriteLine("Ingrese la cedula: ");
                 string cedula4 = Console.ReadLine();
-                Personas persona4 = dal.GetPersona(cedula4);
+                Persona persona4 = dal.GetPersona(cedula4);
                 Console.WriteLine(persona4.GetString());
                 Console.WriteLine("Ingrese la matricula del vehiculo: ");
                 string matricula = Console.ReadLine();
-                Vehiculos vehiculo = dalVehiuclos.GetVehiculo(matricula);
+                Vehiculo vehiculo = dalVehiuclos.GetVehiculo(matricula);
                 Console.WriteLine(vehiculo.GetString());
-                if (vehiculo != null)
-                {
-                    vehiculo.Persona = persona4;
-                    if (persona4.Vehiculos == null)
-                    {
-                        persona4.Vehiculos = new List<Vehiculos>();
-                    }
-                    persona4.Vehiculos.Add(vehiculo);
-                    dalVehiuclos.UpdateVehiculo(vehiculo);
-                }
-                else
-                {
-                    Console.WriteLine("Vehiculo no encontrado.");
-                }
                 break;
 
             case "EXIT":

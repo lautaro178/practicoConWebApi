@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
 using DAL.IDALs;
+using Shared;
 
 namespace DAL.DALs
 {
@@ -17,41 +18,47 @@ namespace DAL.DALs
             _context = dBContext;
         }
 
-        public void AddPersona(Personas persona)
+        public void AddPersona(Persona persona)
         {
-            _context.Personas.Add(persona);
+            var personaEntity = Personas.FromEntity(persona);
+            _context.Personas.Add(personaEntity);
             _context.SaveChanges();
         }
 
-        public Personas GetPersona(string cedula)
+        public Persona GetPersona(string cedula)
         {
-            return _context.Personas.FirstOrDefault(p => p.Documento == cedula);
+            var PersonaEntity = _context.Personas.FirstOrDefault(p => p.Documento == cedula);
+            if (PersonaEntity != null)
+            {
+                return PersonaEntity.getEntity();
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public List<Personas> GetPersonas()
+        public List<Persona> GetPersonas()
         {
-            return _context.Personas.ToList();
+            return _context.Personas.Select(p => new Persona { Documento = p.Documento, Nombre = p.Nombre, Apellido = p.Apellido, Edad = p.Edad }).ToList();
         }
 
         public void DeletePersona(string id)
         {
-            Personas persona = GetPersona(id);
-            if (persona != null)
+            var personaEntity = _context.Personas.FirstOrDefault(p => p.Documento == id);
+            if (personaEntity != null)
             {
-                _context.Personas.Remove(persona);
+                _context.Personas.Remove(personaEntity);
                 _context.SaveChanges();
             }
         }
 
-        public void UpdatePersona(Personas persona)
+        public void UpdatePersona(Persona persona)
         {
-            Personas personaToUpdate = GetPersona(persona.Documento);
-            if (personaToUpdate != null)
+            var personaEntity = _context.Personas.FirstOrDefault(p => p.Documento == persona.Documento);
+            if (personaEntity != null)
             {
-                personaToUpdate.Nombre = persona.Nombre;
-                personaToUpdate.Apellido = persona.Apellido;
-                personaToUpdate.Documento = persona.Documento;
-                personaToUpdate.Edad = persona.Edad;
+                personaEntity = Personas.FromEntity(persona);
                 _context.SaveChanges();
             }
         }

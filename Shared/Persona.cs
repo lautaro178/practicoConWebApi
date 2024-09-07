@@ -1,8 +1,10 @@
-﻿namespace Shared
+﻿using System.Text;
+
+namespace Shared
 {
     public class Persona
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; } = "-- Sin Nombre --";
         public string Apellido { get; set; } = "-- Sin Apellido --";
         public int Edad { get; set; } = 0;
@@ -22,9 +24,24 @@
             }
         }
 
+        //public virtual ICollection<Vehiculo> Vehiculos { get; set; }
+
         public string GetString()
         {
             return $"ID: {Id}, Nombre: {Nombre}, Apellido: {Apellido}, Documento: {Documento}, Edad: {Edad}";
         }
+
+        //public string GetStringConVehiculo()
+        //{
+        //    var infoVehiculos = new StringBuilder();
+        //    foreach (var vehiculo in Vehiculos)
+        //    {
+        //        infoVehiculos.AppendLine(vehiculo.GetString());
+        //    }
+
+        //    return $"ID: {Id}, Nombre: {Nombre}, Apellido: {Apellido}, Documento: {Documento}, Edad: {Edad}\nVehiculos:\n{infoVehiculos}";
+        //}
+
+
     }
 }

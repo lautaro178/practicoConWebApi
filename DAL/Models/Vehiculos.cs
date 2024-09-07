@@ -20,9 +20,9 @@ namespace DAL.Models
 
         public Personas? Persona { get; set; }
 
-        public Vehiculos getEntity()
+        public Vehiculo getEntity()
         {
-            return new Vehiculos
+            return new Vehiculo
             {
                 Id = this.Id,
                 Marca = this.Marca,
@@ -31,7 +31,7 @@ namespace DAL.Models
             };
         }
 
-        public static Vehiculos FromEntity(Vehiculos entity)
+        public static Vehiculos FromEntity(Vehiculo entity)
         {
             return new Vehiculos
             {

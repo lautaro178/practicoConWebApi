@@ -6,13 +6,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shared;
 
 namespace DAL.Models
 {
     public class Personas
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]   
+        [Key]
         public int Id { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public string Apellido { get; set; } = string.Empty;
@@ -21,9 +22,9 @@ namespace DAL.Models
 
         public virtual ICollection<Vehiculos> Vehiculos { get; set; }
 
-        public Personas getEntity()
+        public Persona getEntity()
         {
-            return new Personas
+            return new Persona
             {
                 Id = this.Id,
                 Nombre = this.Nombre,
@@ -33,7 +34,7 @@ namespace DAL.Models
             };
         }
 
-        public static Personas FromEntity (Personas entity)
+        public static Personas FromEntity(Persona entity)
         {
             return new Personas
             {
@@ -45,27 +46,27 @@ namespace DAL.Models
             };
         }
 
-        public string GetStringConVehiculo(DbContext context)
-        {
-            var personaConVehiculos = context.Set<Personas>()
-                                             .Include(p => p.Vehiculos)
-                                             .FirstOrDefault(p => p.Id == this.Id);
+        //public string GetStringConVehiculo(DbContext context)
+        //{
+        //    var personaConVehiculos = context.Set<Personas>()
+        //                                     .Include(p => p.Vehiculos)
+        //                                     .FirstOrDefault(p => p.Id == this.Id);
 
-            if (personaConVehiculos == null)
-            {
-                return "Persona no encontrada.";
-            }
+        //    if (personaConVehiculos == null)
+        //    {
+        //        return "Persona no encontrada.";
+        //    }
 
-            var infoPersona = $"Id: {personaConVehiculos.Id}, Nombre: {personaConVehiculos.Nombre}, Apellido: {personaConVehiculos.Apellido}, Documento: {personaConVehiculos.Documento}, Edad: {personaConVehiculos.Edad}";
+        //    var infoPersona = $"Id: {personaConVehiculos.Id}, Nombre: {personaConVehiculos.Nombre}, Apellido: {personaConVehiculos.Apellido}, Documento: {personaConVehiculos.Documento}, Edad: {personaConVehiculos.Edad}";
 
-            var infoVehiculos = new StringBuilder();
-            foreach (var vehiculo in personaConVehiculos.Vehiculos)
-            {
-                infoVehiculos.AppendLine($"Vehiculo Id: {vehiculo.Id}, Marca: {vehiculo.Marca}, Modelo: {vehiculo.Modelo}, Matricula: {vehiculo.Matricula}");
-            }
+        //    var infoVehiculos = new StringBuilder();
+        //    foreach (var vehiculo in personaConVehiculos.Vehiculos)
+        //    {
+        //        infoVehiculos.AppendLine($"Vehiculo Id: {vehiculo.Id}, Marca: {vehiculo.Marca}, Modelo: {vehiculo.Modelo}, Matricula: {vehiculo.Matricula}");
+        //    }
 
-            return $"{infoPersona}\nVehiculos:\n{infoVehiculos}";
-        }
+        //    return $"{infoPersona}\nVehiculos:\n{infoVehiculos}";
+        //}
 
         public string GetString()
         {

@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    environment:
+        JWT_SECRET: EjemploKeySecreta
+    build:
+      context: .
+      dockerfile: WebAPI/Dockerfile
+    ports:
+      - 5000:8080
+      - 5001:8081
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - "1402:1433"
+    environment:
+      - SA_PASSWORD=231002lib
+      - ACCEPT_EULA=Y
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+volumes:
+  sqlserver-data:
